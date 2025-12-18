@@ -1,0 +1,107 @@
+import { ArrowRight } from "lucide-react";
+import { Button } from "./ui/button";
+import sunsetCruise from "@/assets/sunset-cruise.jpg";
+import heroYacht from "@/assets/hero-yacht.jpg";
+import yachtCabin from "@/assets/yacht-cabin.jpg";
+
+const experiences = [
+  {
+    title: "Day Trips",
+    subtitle: "Magic of Mallorca",
+    description:
+      "Spend a perfect day exploring crystal-clear waters, hidden coves, and pristine beaches. Includes gourmet lunch and refreshments.",
+    image: heroYacht,
+    duration: "8 hours",
+  },
+  {
+    title: "Sunset Cruises",
+    subtitle: "Golden Hour",
+    description:
+      "Watch the sun dip below the horizon while enjoying champagne and canapés. An unforgettable romantic experience.",
+    image: sunsetCruise,
+    duration: "3 hours",
+  },
+  {
+    title: "Week Charters",
+    subtitle: "Complete Luxury",
+    description:
+      "Embark on a week-long adventure exploring the entire Balearic archipelago. Fully customizable itinerary with overnight stays.",
+    image: yachtCabin,
+    duration: "7 days",
+  },
+];
+
+const ExperiencesSection = () => {
+  return (
+    <section id="experiences" className="section-padding bg-muted/30">
+      <div className="container-elegant">
+        {/* Section Header */}
+        <div className="text-center mb-16 md:mb-24">
+          <span className="text-accent text-xs tracking-[0.4em] uppercase mb-4 block">
+            Cruises
+          </span>
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground font-light mb-6">
+            Experiences
+          </h2>
+          <div className="divider-gold mx-auto mb-6" />
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Choose from daily charters to complete luxurious custom voyages accommodating your every desire.
+          </p>
+        </div>
+
+        {/* Experiences Grid */}
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
+          {experiences.map((experience, index) => (
+            <article
+              key={index}
+              className="group bg-card border border-border overflow-hidden hover:shadow-[0_4px_30px_hsla(220,50%,12%,0.08)] transition-all duration-500"
+            >
+              {/* Image */}
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={experience.image}
+                  alt={experience.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-8">
+                <span className="text-accent text-[10px] tracking-[0.3em] uppercase">
+                  {experience.subtitle}
+                </span>
+                <h3 className="font-serif text-2xl text-foreground mt-2 mb-3">
+                  {experience.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                  {experience.description}
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <span className="text-xs tracking-wider text-muted-foreground uppercase">
+                    {experience.duration}
+                  </span>
+                  <a
+                    href="#contact"
+                    className="flex items-center gap-2 text-foreground text-sm font-medium hover:text-accent transition-colors group/link"
+                  >
+                    Learn More
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-16">
+          <Button variant="outline" size="lg" asChild>
+            <a href="#contact">Request Custom Charter</a>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ExperiencesSection;

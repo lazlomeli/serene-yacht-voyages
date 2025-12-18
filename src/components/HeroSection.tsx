@@ -1,0 +1,55 @@
+import { ChevronDown } from "lucide-react";
+import { Button } from "./ui/button";
+import heroImage from "@/assets/hero-yacht.jpg";
+
+const HeroSection = () => {
+  return (
+    <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="Luxury sailing yacht in Mediterranean waters near Mallorca"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-primary/70" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <span className="inline-block text-accent text-xs md:text-sm tracking-[0.4em] uppercase mb-6 opacity-0 animate-fade-up">
+          Luxury Yacht Charters
+        </span>
+        
+        <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-primary-foreground font-light leading-[1.1] mb-8 opacity-0 animate-fade-up delay-100">
+          Embark on Your
+          <span className="block italic font-normal text-accent mt-2">Adventure</span>
+        </h1>
+        
+        <p className="text-primary-foreground/80 text-lg md:text-xl font-light max-w-2xl mx-auto mb-12 leading-relaxed opacity-0 animate-fade-up delay-200">
+          Exclusive daily charters and private custom voyages around the most breathtaking destinations of Mallorca and the Balearic Islands.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-up delay-300">
+          <Button variant="gold" size="lg" asChild>
+            <a href="#experiences">Explore Experiences</a>
+          </Button>
+          <Button variant="hero" size="lg" asChild>
+            <a href="#yacht">Discover The Yacht</a>
+          </Button>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <a
+        href="#yacht"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors opacity-0 animate-fade-in delay-500"
+      >
+        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+        <ChevronDown className="w-5 h-5 animate-bounce" />
+      </a>
+    </section>
+  );
+};
+
+export default HeroSection;
