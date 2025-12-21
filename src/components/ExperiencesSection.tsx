@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import sunsetCruise from "@/assets/sunset-cruise.jpg";
 import heroYacht from "@/assets/hero-yacht.jpg";
-import yachtCabin from "@/assets/yacht-cabin.jpg";
+import yachtCabin from "@/assets/yacht-deck.png";
 
 const experiences = [
   {
@@ -10,8 +10,8 @@ const experiences = [
     subtitle: "Magic of Mallorca",
     description:
       "Spend a perfect day exploring crystal-clear waters, hidden coves, and pristine beaches. Includes gourmet lunch and refreshments.",
-    image: heroYacht,
-    duration: "8 hours",
+    image: yachtCabin,
+    duration: "8-10 hours",
   },
   {
     title: "Sunset Cruises",
@@ -19,15 +19,15 @@ const experiences = [
     description:
       "Watch the sun dip below the horizon while enjoying champagne and canapés. An unforgettable romantic experience.",
     image: sunsetCruise,
-    duration: "3 hours",
+    duration: "4 hours",
   },
   {
     title: "Week Charters",
     subtitle: "Complete Luxury",
     description:
       "Embark on a week-long adventure exploring the entire Balearic archipelago. Fully customizable itinerary with overnight stays.",
-    image: yachtCabin,
-    duration: "7 days",
+    image: heroYacht,
+    duration: "Multiple days",
   },
 ];
 

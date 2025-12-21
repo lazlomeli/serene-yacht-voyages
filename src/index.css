@@ -161,6 +161,12 @@
   .link-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full;
   }
+
+  /* White calendar icon for date input in dark sections */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
 }
 
 @layer utilities {
@@ -174,6 +180,10 @@
 
   .animate-slide-in {
     animation: slideIn 0.8s ease-out forwards;
+  }
+
+  .animate-blink {
+    animation: blink 1.5s ease-in-out infinite;
   }
 
   .delay-100 { animation-delay: 100ms; }
@@ -207,5 +217,10 @@
       opacity: 1;
       transform: translateX(0);
     }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
   }
 }

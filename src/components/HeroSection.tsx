@@ -1,18 +1,21 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
-import heroImage from "@/assets/hero-yacht.jpg";
+import heroVideo from "@/assets/hero-yacht-low.mp4";
 
 const HeroSection = () => {
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Luxury sailing yacht in Mediterranean waters near Mallorca"
+        <video
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-primary/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary/100" />
       </div>
 
       {/* Content */}

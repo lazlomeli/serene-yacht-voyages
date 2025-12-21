@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
+import { useLocation } from "react-router-dom";
+import ironLogo from "@/assets/iron-logo.svg";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const isFacilitiesPage = location.pathname === "/facilities";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,39 +20,56 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { href: "#yacht", label: "The Yacht" },
-    { href: "#experiences", label: "Experiences" },
-    { href: "#crew", label: "Crew" },
-    { href: "#facilities", label: "Facilities" },
-    { href: "#pricing", label: "Pricing" },
+    { href: isHomePage ? "#yacht" : "/#yacht", label: "The Yacht" },
+    { href: isHomePage ? "#experiences" : "/#experiences", label: "Experiences" },
+    { href: isHomePage ? "#islands" : "/#islands", label: "Islands" },
+    { href: isHomePage ? "#crew" : "/#crew", label: "Crew" },
+    { href: isHomePage ? "#facilities" : "/#facilities", label: "Facilities" },
+    { href: isHomePage ? "#pricing" : "/#pricing", label: "Pricing" },
   ];
+
+  // Hide header on scroll when on facilities page
+  const shouldHideHeader = isFacilitiesPage && isScrolled;
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-sm"
+        shouldHideHeader 
+          ? "-translate-y-full opacity-0" 
+          : "translate-y-0 opacity-100"
+      } ${
+        isScrolled || isMobileMenuOpen
+          ? "bg-background/95 backdrop-blur-sm shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="container-elegant">
         <nav className="flex items-center justify-between h-20 md:h-24 px-6 md:px-12 lg:px-20">
           {/* Logo */}
-          <a href="#" className="flex flex-col items-start">
-            <span
-              className={`font-serif text-xl md:text-2xl font-semibold tracking-wide transition-colors duration-300 ${
-                isScrolled ? "text-foreground" : "text-primary-foreground"
+          <a href="/" className="flex items-center gap-3">
+            <img 
+              src={ironLogo} 
+              alt="Iron Monkey Logo" 
+              className={`h-10 w-10 transition-all duration-300 ${
+                isScrolled || isMobileMenuOpen ? "brightness-0" : ""
               }`}
-            >
-              Iron Monkey
-            </span>
-            <span
-              className={`text-[10px] tracking-[0.3em] uppercase transition-colors duration-300 ${
-                isScrolled ? "text-muted-foreground" : "text-primary-foreground/70"
-              }`}
-            >
-              Sailing Vessel
-            </span>
+            />
+            <div className="flex flex-col items-start">
+              <span
+                className={`font-serif text-xl md:text-2xl font-semibold tracking-wide transition-colors duration-300 ${
+                  isScrolled || isMobileMenuOpen ? "text-foreground" : "text-primary-foreground"
+                }`}
+              >
+                Iron Monkey
+              </span>
+              <span
+                className={`text-[10px] tracking-[0.3em] uppercase transition-colors duration-300 ${
+                  isScrolled || isMobileMenuOpen ? "text-muted-foreground" : "text-primary-foreground/70"
+                }`}
+              >
+                Sailing Vessel
+              </span>
+            </div>
           </a>
 
           {/* Desktop Navigation */}
@@ -71,11 +93,11 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Button
-              variant={isScrolled ? "gold" : "hero"}
+              variant={isScrolled || isMobileMenuOpen ? "gold" : "hero"}
               size="sm"
               asChild
             >
-              <a href="#contact">Book Now</a>
+              <a href={isHomePage ? "#contact" : "/#contact"}>Book Now</a>
             </Button>
           </div>
 
@@ -88,13 +110,13 @@ const Header = () => {
             {isMobileMenuOpen ? (
               <X
                 className={`w-6 h-6 transition-colors ${
-                  isScrolled ? "text-foreground" : "text-primary-foreground"
+                  isScrolled || isMobileMenuOpen ? "text-foreground" : "text-primary-foreground"
                 }`}
               />
             ) : (
               <Menu
                 className={`w-6 h-6 transition-colors ${
-                  isScrolled ? "text-foreground" : "text-primary-foreground"
+                  isScrolled || isMobileMenuOpen ? "text-foreground" : "text-primary-foreground"
                 }`}
               />
             )}
@@ -103,7 +125,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-background/98 backdrop-blur-sm border-t border-border animate-fade-in">
+          <div className="lg:hidden bg-background backdrop-blur-sm border-t border-border animate-fade-in">
             <ul className="flex flex-col py-6 px-6">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -118,7 +140,12 @@ const Header = () => {
               ))}
               <li className="pt-4">
                 <Button variant="gold" size="default" className="w-full" asChild>
-                  <a href="#contact">Book Now</a>
+                  <a 
+                    href={isHomePage ? "#contact" : "/#contact"}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Book Now
+                  </a>
                 </Button>
               </li>
             </ul>

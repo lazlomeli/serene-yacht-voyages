@@ -61,7 +61,7 @@ const ContactSection = () => {
                   <span className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/50 block">
                     Location
                   </span>
-                  <span className="text-primary-foreground">Puerto Portals, Mallorca</span>
+                  <span className="text-primary-foreground">La Lonja Marina, Palma de Mallorca</span>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ const ContactSection = () => {
                   <option value="" className="text-foreground">Select an option</option>
                   <option value="sunset" className="text-foreground">Sunset Cruise</option>
                   <option value="day" className="text-foreground">Day Trip</option>
-                  <option value="week" className="text-foreground">Week Charter</option>
+                  <option value="multiple" className="text-foreground">Multiple days</option>
                   <option value="custom" className="text-foreground">Custom Charter</option>
                 </select>
               </div>

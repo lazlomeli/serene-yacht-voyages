@@ -37,7 +37,7 @@ const CrewSection = () => {
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
-                <span>Multilingual service in English, Spanish, and Dutch</span>
+                <span>Multilingual service in English, Spanish, German, and Dutch</span>
               </li>
             </ul>
           </div>
@@ -48,7 +48,7 @@ const CrewSection = () => {
               <Quote className="w-10 h-10 text-accent mb-6" />
               <blockquote className="font-serif text-xl md:text-2xl text-primary-foreground/90 leading-relaxed mb-8 italic">
                 "An absolutely unforgettable experience. The crew anticipated our every need, 
-                and the yacht was simply stunning. The sunset cruise was magical—we'll be back!"
+                and the yacht was simply stunning. The sunset cruise was magical, we'll be back!"
               </blockquote>
               <footer>
                 <cite className="not-italic">

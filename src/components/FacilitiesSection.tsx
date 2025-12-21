@@ -1,28 +1,16 @@
-import {
-  Wifi,
-  UtensilsCrossed,
-  Wine,
-  Waves,
-  Music,
-  Sun,
-  Bed,
-  ShowerHead,
-} from "lucide-react";
-import yachtCabin from "@/assets/yacht-cabin.jpg";
-import yachtDeck from "@/assets/yacht-deck.jpg";
-
-const facilities = [
-  { icon: Bed, label: "Luxury Cabins", description: "Comfortable sleeping quarters" },
-  { icon: UtensilsCrossed, label: "Gourmet Dining", description: "Fresh cuisine prepared onboard" },
-  { icon: Wine, label: "Premium Bar", description: "Champagne & fine beverages" },
-  { icon: Sun, label: "Sun Deck", description: "Spacious lounging areas" },
-  { icon: Waves, label: "Water Toys", description: "Snorkeling & swimming gear" },
-  { icon: Music, label: "Sound System", description: "Premium audio throughout" },
-  { icon: ShowerHead, label: "Fresh Water", description: "Hot showers available" },
-  { icon: Wifi, label: "Connectivity", description: "WiFi on request" },
-];
+import { useNavigate } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
+import captainCabin from "@/assets/captain.png";
+import mainRoom from "@/assets/main-room.png";
+import { facilities } from "@/data/facilities";
 
 const FacilitiesSection = () => {
+  const navigate = useNavigate();
+
+  const handleFacilityClick = (facilityId: string) => {
+    navigate(`/facilities?facility=${facilityId}`);
+  };
+
   return (
     <section id="facilities" className="section-padding bg-background">
       <div className="container-elegant">
@@ -44,36 +32,68 @@ const FacilitiesSection = () => {
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="aspect-[4/3] overflow-hidden">
             <img
-              src={yachtCabin}
-              alt="Luxurious yacht cabin interior"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              src={captainCabin}
+              alt="Captain's Cabin"
+              className="w-full h-full object-cover transition-transform duration-700"
             />
           </div>
           <div className="aspect-[4/3] overflow-hidden">
             <img
-              src={yachtDeck}
-              alt="Yacht deck with lounge area"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              src={mainRoom}
+              alt="Main Room"
+              className="w-full h-full object-cover transition-transform duration-700"
             />
           </div>
         </div>
 
+        {/* Instruction Text */}
+        <div className="text-center mb-8">
+          <p className="text-muted-foreground text-sm italic">
+            Click on any facility below to view detailed photos and information
+          </p>
+        </div>
+
         {/* Facilities Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+        <div id="facilities-grid" className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {facilities.map((facility, index) => (
             <div
               key={index}
-              className="text-center group"
+              className={`text-center group relative flex flex-col ${facility.clickable ? 'cursor-pointer' : 'cursor-default'}`}
+              onClick={() => facility.clickable && handleFacilityClick(facility.id)}
             >
-              <div className="w-16 h-16 mx-auto mb-4 border border-border flex items-center justify-center group-hover:border-accent group-hover:bg-accent/5 transition-all duration-300">
-                <facility.icon className="w-7 h-7 text-muted-foreground group-hover:text-accent transition-colors duration-300" />
+              {/* Card Container with Border and Hover Effect */}
+              <div className={`p-6 border border-border rounded-sm transition-all duration-300 flex flex-col h-full ${
+                facility.clickable 
+                  ? 'group-hover:border-accent group-hover:shadow-lg group-hover:shadow-accent/10 group-hover:-translate-y-1' 
+                  : 'opacity-60'
+              }`}>
+                {/* Icon Container */}
+                <div className={`w-16 h-16 mx-auto mb-4 border border-border flex items-center justify-center transition-all duration-300 ${
+                  facility.clickable ? 'group-hover:border-accent group-hover:bg-accent/5' : ''
+                }`}>
+                  <facility.icon className={`w-7 h-7 text-muted-foreground transition-colors duration-300 ${
+                    facility.clickable ? 'group-hover:text-accent' : ''
+                  }`} />
+                </div>
+                
+                {/* Title and Description */}
+                <h4 className={`font-serif text-lg text-foreground mb-1 transition-colors duration-300 ${
+                  facility.clickable ? 'group-hover:text-accent' : ''
+                }`}>
+                  {facility.label}
+                </h4>
+                <p className="text-muted-foreground text-sm mb-3 flex-grow">
+                  {facility.description}
+                </p>
+                
+                {/* "View Details" Call-to-Action - only show for clickable */}
+                {facility.clickable && (
+                  <div className="flex items-center justify-center gap-1 text-xs text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-auto">
+                    <span className="tracking-wider uppercase">View Gallery</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </div>
+                )}
               </div>
-              <h4 className="font-serif text-lg text-foreground mb-1">
-                {facility.label}
-              </h4>
-              <p className="text-muted-foreground text-sm">
-                {facility.description}
-              </p>
             </div>
           ))}
         </div>

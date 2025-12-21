@@ -1,4 +1,7 @@
-import { Instagram, Facebook, Mail } from "lucide-react";
+import { Instagram, Facebook, Mail, Linkedin, Youtube } from "lucide-react";
+import ironLogo from "@/assets/iron-logo.svg";
+import redEnsignLogo from "@/assets/red-ensign.png";
+import mcaLogo from "@/assets/ mca.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,17 +13,45 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="mb-6">
-              <span className="font-serif text-2xl font-semibold tracking-wide">
-                Iron Monkey
-              </span>
-              <span className="text-[10px] tracking-[0.3em] uppercase text-primary-foreground/60 block mt-1">
-                Sailing Vessel
-              </span>
+              <div className="flex items-center gap-3 mb-2">
+                <img 
+                  src={ironLogo} 
+                  alt="Iron Monkey Logo" 
+                  className="h-10 w-10"
+                />
+                <div>
+                  <span className="font-serif text-2xl font-semibold tracking-wide">
+                    Iron Monkey
+                  </span>
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-primary-foreground/60 block">
+                    Sailing Vessel
+                  </span>
+                </div>
+              </div>
             </div>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-xs">
+            <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-xs mb-6">
               Luxury yacht charters in Mallorca and the Balearic Islands. 
-              Creating unforgettable maritime experiences since 2020.
+              Creating unforgettable maritime experiences since 2020. 
             </p>
+            
+            {/* Certifications */}
+            <div>
+              <p className="text-primary-foreground/60 text-xs tracking-wider uppercase mb-3">
+                Red Ensign Code MCA Certified
+              </p>
+              <div className="flex items-center gap-4">
+                <img 
+                  src={redEnsignLogo} 
+                  alt="Red Ensign Group" 
+                  className="h-12 w-auto opacity-80"
+                />
+                <img 
+                  src={mcaLogo} 
+                  alt="MCA Certified" 
+                  className="h-12 w-auto opacity-80"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -32,6 +63,7 @@ const Footer = () => {
               {[
                 { href: "#yacht", label: "The Yacht" },
                 { href: "#experiences", label: "Experiences" },
+                { href: "#islands", label: "Islands" },
                 { href: "#crew", label: "Crew" },
                 { href: "#facilities", label: "Facilities" },
                 { href: "#pricing", label: "Pricing" },
@@ -56,7 +88,7 @@ const Footer = () => {
             </h4>
             <div className="flex gap-4 mb-6">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/sv.ironmonkey/#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 border border-primary-foreground/20 flex items-center justify-center hover:border-accent hover:text-accent transition-colors"
@@ -65,24 +97,26 @@ const Footer = () => {
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.linkedin.com/company/monkey-s-charter/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 border border-primary-foreground/20 flex items-center justify-center hover:border-accent hover:text-accent transition-colors"
-                aria-label="Facebook"
+                aria-label="Linkedin"
               >
-                <Facebook className="w-4 h-4" />
+                <Linkedin className="w-4 h-4" />
               </a>
               <a
-                href="mailto:info@svironmonkey.nl"
+                href="https://www.youtube.com/channel/UCBA4Fee2s8ZpkTLRPUbBfcg"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 border border-primary-foreground/20 flex items-center justify-center hover:border-accent hover:text-accent transition-colors"
-                aria-label="Email"
+                aria-label="Youtube"
               >
-                <Mail className="w-4 h-4" />
+                <Youtube className="w-4 h-4" />
               </a>
             </div>
             <p className="text-primary-foreground/60 text-sm">
-              Puerto Portals, Mallorca
+              La Lonja Marina, Palma de Mallorca
               <br />
               Balearic Islands, Spain
             </p>
@@ -94,20 +128,6 @@ const Footer = () => {
           <p className="text-primary-foreground/50 text-xs tracking-wider">
             © {currentYear} SV Iron Monkey. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-primary-foreground/50 hover:text-primary-foreground text-xs tracking-wider transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-primary-foreground/50 hover:text-primary-foreground text-xs tracking-wider transition-colors"
-            >
-              Terms of Service
-            </a>
-          </div>
         </div>
       </div>
     </footer>
