@@ -5,6 +5,7 @@ import reviews from "@/data/reviews.json";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import tripadvisorLogo from "@/assets/tripadvisor.png";
+import captainImage from "@/assets/captain.png";
 
 const CrewSection = () => {
   // Calculate overall rating
@@ -59,7 +60,7 @@ const CrewSection = () => {
             {/* Image */}
             <div className="relative">
               <img 
-                src="/src/assets/captain.png" 
+                src={captainImage} 
                 alt="Captain" 
                 className="w-full h-auto"
               />
