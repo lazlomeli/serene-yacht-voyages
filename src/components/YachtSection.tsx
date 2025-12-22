@@ -66,7 +66,7 @@ const YachtSection = () => {
         </div>
 
         {/* Content Grid */}
-        <div className="max-w-4xl mx-auto">
+        <div id="yacht-content" className="max-w-4xl mx-auto px-[30px] md:px-0">
           {/* Title and Description */}
           <div className="text-center mb-12">
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
