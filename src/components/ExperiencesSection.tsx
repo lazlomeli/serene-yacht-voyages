@@ -33,21 +33,21 @@ const experiences = [
 
 const ExperiencesSection = () => {
   return (
-    <section id="experiences" className="section-padding bg-muted/30">
+    <section id="experiences" className="section-padding bg-muted/30" aria-labelledby="experiences-heading">
       <div className="container-elegant">
         {/* Section Header */}
-        <div className="text-center mb-16 md:mb-24">
+        <header className="text-center mb-16 md:mb-24">
           <span className="text-accent text-xs tracking-[0.4em] uppercase mb-4 block">
             Cruises
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground font-light mb-6">
+          <h2 id="experiences-heading" className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground font-light mb-6">
             Experiences
           </h2>
-          <div className="divider-gold mx-auto mb-6" />
+          <div className="divider-gold mx-auto mb-6" aria-hidden="true" />
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Choose from daily charters to complete luxurious custom voyages accommodating your every desire.
           </p>
-        </div>
+        </header>
 
         {/* Experiences Grid */}
         <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
@@ -57,13 +57,14 @@ const ExperiencesSection = () => {
               className="group bg-card border border-border overflow-hidden hover:shadow-[0_4px_30px_hsla(220,50%,12%,0.08)] transition-all duration-500"
             >
               {/* Image */}
-              <div className="aspect-[4/3] overflow-hidden">
+              <figure className="aspect-[4/3] overflow-hidden">
                 <img
                   src={experience.image}
-                  alt={experience.title}
+                  alt={`${experience.title} - ${experience.description.substring(0, 50)}`}
                   className="w-full h-full object-cover transition-transform duration-700"
+                  loading="lazy"
                 />
-              </div>
+              </figure>
 
               {/* Content */}
               <div className="p-8">
@@ -83,9 +84,10 @@ const ExperiencesSection = () => {
                   <a
                     href="#contact"
                     className="flex items-center gap-2 text-foreground text-sm font-medium hover:text-accent transition-colors group/link"
+                    aria-label={`Learn more about ${experience.title}`}
                   >
                     Learn More
-                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" aria-hidden="true" />
                   </a>
                 </div>
               </div>

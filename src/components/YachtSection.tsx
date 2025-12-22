@@ -60,17 +60,17 @@ const YachtSection = () => {
   };
 
   return (
-    <section id="yacht" className="bg-background" style={{ paddingBottom: '30px', paddingTop: '120px' }}>
+    <section id="yacht" className="bg-background" style={{ paddingBottom: '30px', paddingTop: '120px' }} aria-labelledby="yacht-heading">
       <div className="container-elegant">
         {/* Section Header */}
         <div className="text-center mb-6 md:mb-16">
           <span className="text-accent text-xs tracking-[0.4em] uppercase mb-4 block">
             Sailing Vessel
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground font-light">
+          <h2 id="yacht-heading" className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground font-light">
             Iron Monkey
           </h2>
-          <div className="divider-gold mx-auto" />
+          <div className="divider-gold mx-auto" aria-hidden="true" />
         </div>
 
         {/* Content Grid */}
@@ -85,30 +85,31 @@ const YachtSection = () => {
           </div>
 
           {/* Image */}
-          <div className="relative mb-12">
+          <figure className="relative mb-12">
             <div className="aspect-[16/9] overflow-hidden">
               <img
                 src={yachtNight}
-                alt="Iron Monkey yacht at night"
+                alt="SV Iron Monkey luxury sailing yacht illuminated at night in Mediterranean waters"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
-          </div>
+          </figure>
 
           {/* Features Grid */}
-          <div className="grid sm:grid-cols-2 gap-8 mb-12">
+          <div className="grid sm:grid-cols-2 gap-8 mb-12" role="list">
             {features.map((feature, index) => (
-              <div key={index} className="group">
+              <article key={index} className="group" role="listitem">
                 <div className="flex items-center gap-3 mb-2">
-                  <feature.icon className="w-8 h-8 text-accent transition-colors duration-300" />
-                  <h4 className="font-serif text-lg text-foreground">
+                  <feature.icon className="w-8 h-8 text-accent transition-colors duration-300" aria-hidden="true" />
+                  <h3 className="font-serif text-lg text-foreground">
                     {feature.title}
-                  </h4>
+                  </h3>
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {feature.description}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
 
@@ -117,10 +118,13 @@ const YachtSection = () => {
             <button
               onClick={() => setShowSpecs(!showSpecs)}
               className="group flex items-center gap-3 text-accent hover:text-accent/80 transition-colors duration-300 mx-auto"
+              aria-expanded={showSpecs}
+              aria-controls="yacht-specs"
             >
               <span className="font-serif text-lg">View Technical Specifications</span>
               <ChevronDown 
                 className={`w-5 h-5 transition-transform duration-300 ${showSpecs ? 'rotate-180' : ''}`}
+                aria-hidden="true"
               />
             </button>
           </div>
@@ -132,6 +136,7 @@ const YachtSection = () => {
           className={`overflow-hidden transition-all duration-500 ease-in-out px-[30px] md:px-0 ${
             showSpecs ? 'max-h-[3000px] opacity-100 mt-16' : 'max-h-0 opacity-0'
           }`}
+          aria-hidden={!showSpecs}
         >
           <div className="border-t border-accent/20 pt-12">
             <div className="text-center mb-12">
@@ -143,7 +148,7 @@ const YachtSection = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
+            <dl className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
               {specifications.map((spec, index) => (
                 <div 
                   key={index}
@@ -151,7 +156,7 @@ const YachtSection = () => {
                 >
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex-shrink-0">
-                      <spec.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+                      <spec.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" aria-hidden="true" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <dt className="text-xs sm:text-sm font-medium text-muted-foreground mb-1">
@@ -164,17 +169,19 @@ const YachtSection = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </dl>
 
             {/* Close Button */}
             <div className="pt-12 text-center">
               <button
                 onClick={handleCloseSpecs}
                 className="group flex items-center gap-3 text-accent hover:text-accent/80 transition-colors duration-300 mx-auto"
+                aria-label="Close specifications"
               >
                 <span className="font-serif text-lg">Close Specifications</span>
                 <ChevronDown 
                   className="w-5 h-5 rotate-180 transition-transform duration-300"
+                  aria-hidden="true"
                 />
               </button>
             </div>

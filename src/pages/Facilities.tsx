@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronLeft, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import { facilities, type Facility } from "@/data/facilities";
+import SEOHead from "@/components/SEO/SEOHead";
+import StructuredData from "@/components/SEO/StructuredData";
 
 const Facilities = () => {
   const navigate = useNavigate();
@@ -22,7 +24,15 @@ const Facilities = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+      <SEOHead
+        title="Facilities | SV Iron Monkey Yacht Amenities & Features"
+        description="Explore the luxurious facilities aboard SV Iron Monkey. Modern cabins, gourmet galley, entertainment systems, water sports equipment, and premium amenities for an unforgettable sailing experience."
+        keywords="yacht facilities, yacht amenities Mallorca, luxury yacht features, yacht cabins, yacht entertainment, water sports equipment"
+        canonicalUrl="https://svironmonkey.nl/facilities"
+      />
+      <StructuredData type="facilities" />
+      <div className="min-h-screen flex flex-col">
       <main className="flex-1 pt-20 pb-20 bg-background">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           {/* Page Title with Back Button */}
@@ -129,7 +139,8 @@ const Facilities = () => {
       )}
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 };
 

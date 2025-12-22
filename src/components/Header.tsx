@@ -42,17 +42,20 @@ const Header = () => {
           ? "bg-background/95 backdrop-blur-sm shadow-sm"
           : "bg-transparent"
       }`}
+      role="banner"
     >
       <div className="container-elegant">
-        <nav className="flex items-center justify-between h-20 md:h-24 px-6 md:px-12 lg:px-20">
+        <nav className="flex items-center justify-between h-20 md:h-24 px-6 md:px-12 lg:px-20" aria-label="Main navigation">
           {/* Logo */}
           <a href="/" className="flex items-center gap-3">
             <img 
               src={ironLogo} 
-              alt="Iron Monkey Logo" 
+              alt="SV Iron Monkey Logo" 
               className={`h-10 w-10 transition-all duration-300 ${
                 isScrolled || isMobileMenuOpen ? "brightness-0" : ""
               }`}
+              width="40"
+              height="40"
             />
             <div className="flex flex-col items-start">
               <span
@@ -73,7 +76,7 @@ const Header = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center gap-10">
+          <ul className="hidden lg:flex items-center gap-10" role="list">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
@@ -105,19 +108,23 @@ const Header = () => {
           <button
             className="lg:hidden p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? (
               <X
                 className={`w-6 h-6 transition-colors ${
                   isScrolled || isMobileMenuOpen ? "text-foreground" : "text-primary-foreground"
                 }`}
+                aria-hidden="true"
               />
             ) : (
               <Menu
                 className={`w-6 h-6 transition-colors ${
                   isScrolled || isMobileMenuOpen ? "text-foreground" : "text-primary-foreground"
                 }`}
+                aria-hidden="true"
               />
             )}
           </button>
@@ -125,8 +132,8 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-background backdrop-blur-sm border-t border-border animate-fade-in">
-            <ul className="flex flex-col py-6 px-6">
+          <div id="mobile-menu" className="lg:hidden bg-background backdrop-blur-sm border-t border-border animate-fade-in">
+            <ul className="flex flex-col py-6 px-6" role="list">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a

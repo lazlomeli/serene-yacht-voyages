@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
+import StructuredData from "@/components/SEO/StructuredData";
 
 const pricingPlans = [
   {
@@ -56,7 +58,15 @@ const Pricing = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+      <SEOHead
+        title="Pricing | SV Iron Monkey Yacht Charter Rates"
+        description="Transparent pricing for luxury yacht charters in Mallorca. Sunset cruises from €1,100, day trips from €2,200, and week-long charters from €16,000. Professional crew and premium amenities included."
+        keywords="yacht charter prices Mallorca, yacht rental cost, sunset cruise price, day charter rates, weekly yacht rental Balearic Islands"
+        canonicalUrl="https://svironmonkey.nl/pricing"
+      />
+      <StructuredData type="pricing" />
+      <div className="min-h-screen flex flex-col">
       <main className="flex-1 pt-20 pb-20 bg-background">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           {/* Page Title with Back Button */}
@@ -148,7 +158,8 @@ const Pricing = () => {
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 };
 
