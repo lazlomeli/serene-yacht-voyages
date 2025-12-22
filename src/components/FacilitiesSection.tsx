@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { facilities } from "@/data/facilities";
+import { useRef, useState, useEffect } from "react";
 
 // Import images from various folders
 import bf1 from "@/assets/breakfast/bf1.png";
@@ -54,9 +55,67 @@ const carouselImages = [
 
 const FacilitiesSection = () => {
   const navigate = useNavigate();
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const handleFacilityClick = (facilityId: string) => {
     navigate(`/facilities?facility=${facilityId}`);
+  };
+
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+    if (carouselRef.current) {
+      carouselRef.current.style.cursor = 'grabbing';
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !carouselRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    if (carouselRef.current) {
+      carouselRef.current.style.cursor = 'grab';
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      if (carouselRef.current) {
+        carouselRef.current.style.cursor = 'grab';
+      }
+    }
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!carouselRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !carouselRef.current) return;
+    const x = e.touches[0].pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
   };
 
   return (
@@ -78,7 +137,18 @@ const FacilitiesSection = () => {
       </div>
 
       {/* Infinite Carousel - Full Width */}
-      <div className="relative mb-16 overflow-hidden w-full" style={{ position: 'absolute', left: 0 }}>
+      <div 
+        className="relative mb-16 overflow-x-auto overflow-y-hidden w-full carousel-wrapper" 
+        style={{ position: 'absolute', left: 0 }}
+        ref={carouselRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="carousel-container">
           <div className="carousel-track">
             {/* First set of images */}
@@ -87,7 +157,8 @@ const FacilitiesSection = () => {
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
+                  draggable="false"
                 />
               </div>
             ))}
@@ -97,7 +168,8 @@ const FacilitiesSection = () => {
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
+                  draggable="false"
                 />
               </div>
             ))}
@@ -106,7 +178,7 @@ const FacilitiesSection = () => {
       </div>
 
       {/* Instruction Text and Facilities Grid */}
-      <div className="container-elegant" style={{ marginTop: '600px' }}>
+      <div className="container-elegant container-elegant-facilities" style={{ marginTop: '500px' }}>
         {/* Instruction Text */}
         <div className="text-center mb-8">
           <p className="text-muted-foreground text-sm italic">
@@ -115,9 +187,25 @@ const FacilitiesSection = () => {
         </div>
 
         <style>{`
+          .carousel-wrapper {
+            cursor: grab;
+            user-select: none;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+
+          .carousel-wrapper::-webkit-scrollbar {
+            display: none;
+          }
+
+          .carousel-wrapper:active {
+            cursor: grabbing;
+          }
+
           .carousel-container {
             width: 100%;
-            height: 400px;
+            height: 300px;
             position: relative;
           }
 
@@ -127,10 +215,15 @@ const FacilitiesSection = () => {
             animation: scroll 180s linear infinite;
           }
 
+          .carousel-wrapper:hover .carousel-track,
+          .carousel-wrapper:active .carousel-track {
+            animation-play-state: paused;
+          }
+
           .carousel-slide {
             flex: 0 0 auto;
-            width: 500px;
-            height: 400px;
+            width: 400px;
+            height: 300px;
             margin-right: 1rem;
             border-radius: 2px;
             overflow: hidden;
@@ -145,18 +238,18 @@ const FacilitiesSection = () => {
             }
           }
 
-          .carousel-track:hover {
-            animation-play-state: paused;
-          }
-
           @media (max-width: 768px) {
             .carousel-container {
-              height: 300px;
+              height: 200px;
             }
             
             .carousel-slide {
-              width: 350px;
-              height: 300px;
+              width: 240px;
+              height: 200px;
+            }
+
+            .container-elegant-facilities {
+              margin-top: 350px !important;
             }
           }
         `}</style>
