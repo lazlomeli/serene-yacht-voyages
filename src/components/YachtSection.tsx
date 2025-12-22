@@ -1,6 +1,6 @@
 import { Anchor, Compass, Users, Waves, ChevronDown, Ship, Ruler, Gauge, Fuel, Droplet, BedDouble, UserCog } from "lucide-react";
 import yachtNight from "@/assets/yacht-night.jpg";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const features = [
   {
@@ -50,6 +50,14 @@ const specifications = [
 
 const YachtSection = () => {
   const [showSpecs, setShowSpecs] = useState(false);
+  const viewButtonRef = useRef<HTMLDivElement>(null);
+
+  const handleCloseSpecs = () => {
+    setShowSpecs(false);
+    setTimeout(() => {
+      viewButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  };
 
   return (
     <section id="yacht" className="bg-background" style={{ paddingBottom: '30px', paddingTop: '120px' }}>
@@ -105,7 +113,7 @@ const YachtSection = () => {
           </div>
 
           {/* View More Button */}
-          <div className="pt-6 text-center">
+          <div ref={viewButtonRef} className="pt-6 text-center">
             <button
               onClick={() => setShowSpecs(!showSpecs)}
               className="group flex items-center gap-3 text-accent hover:text-accent/80 transition-colors duration-300 mx-auto"
@@ -120,7 +128,8 @@ const YachtSection = () => {
 
         {/* Expandable Specifications Section */}
         <div 
-          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          id="yacht-specs"
+          className={`overflow-hidden transition-all duration-500 ease-in-out px-[30px] md:px-0 ${
             showSpecs ? 'max-h-[3000px] opacity-100 mt-16' : 'max-h-0 opacity-0'
           }`}
         >
@@ -160,7 +169,7 @@ const YachtSection = () => {
             {/* Close Button */}
             <div className="pt-12 text-center">
               <button
-                onClick={() => setShowSpecs(false)}
+                onClick={handleCloseSpecs}
                 className="group flex items-center gap-3 text-accent hover:text-accent/80 transition-colors duration-300 mx-auto"
               >
                 <span className="font-serif text-lg">Close Specifications</span>
