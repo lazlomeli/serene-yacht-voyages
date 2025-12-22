@@ -119,7 +119,7 @@ const FacilitiesSection = () => {
   };
 
   return (
-    <section id="facilities" className="section-padding bg-background">
+    <section id="facilities" className="bg-background" style={{ paddingLeft: '30px', paddingRight: '30px' }}>
       {/* Section Header */}
       <div className="container-elegant">
         <div className="text-center mb-16 md:mb-24">
