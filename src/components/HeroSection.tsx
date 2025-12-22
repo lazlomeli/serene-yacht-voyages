@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
-import heroVideo from "@/assets/hero-yacht-low.mp4";
+import heroVideo from "@/assets/hero-yacht-high.mp4";
 
 const HeroSection = () => {
   return (
