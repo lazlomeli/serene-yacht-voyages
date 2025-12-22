@@ -81,7 +81,7 @@ const CrewSection = () => {
                 {[...Array(5)].map((_, i) => (
                   <svg
                     key={i}
-                    className={`w-7 h-7 ${i < Math.floor(overallRating) ? 'fill-accent text-accent' : 'fill-gray-300 text-gray-300'}`}
+                    className={`w-7 h-7 ${i < Math.floor(overallRating) ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-300 text-gray-300'}`}
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -123,7 +123,7 @@ const CrewSection = () => {
                       {[...Array(review.stars)].map((_, i) => (
                         <svg
                           key={i}
-                          className="w-4 h-4 fill-accent text-accent"
+                          className="w-4 h-4 fill-yellow-400 text-yellow-400"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
