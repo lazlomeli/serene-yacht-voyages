@@ -52,7 +52,7 @@ const YachtSection = () => {
   const [showSpecs, setShowSpecs] = useState(false);
 
   return (
-    <section id="yacht" className="section-padding bg-background">
+    <section id="yacht" className="bg-background" style={{ paddingBottom: '30px', paddingTop: '120px' }}>
       <div className="container-elegant">
         {/* Section Header */}
         <div className="text-center mb-6 md:mb-16">
