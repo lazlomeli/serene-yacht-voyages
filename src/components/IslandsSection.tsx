@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import mallorcaImg from "@/assets/mallorca.png";
 import menorcaImg from "@/assets/menorca.png";
 import ibizaImg from "@/assets/ibiza.png";
+import LazyImage from "./LazyImage";
 
 const islands = [
   {
@@ -68,11 +69,10 @@ const IslandsSection = () => {
                 }`}
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                  <LazyImage
                     src={island.image}
                     alt={`${island.name} - ${island.subtitle}: Beautiful coastline of ${island.name} in the Balearic Islands`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
               </figure>

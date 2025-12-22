@@ -6,6 +6,7 @@ import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import tripadvisorLogo from "@/assets/tripadvisor.png";
 import captainImage from "@/assets/captain.png";
+import LazyImage from "./LazyImage";
 
 const CrewSection = () => {
   // Calculate overall rating
@@ -59,11 +60,10 @@ const CrewSection = () => {
 
             {/* Image */}
             <figure className="relative">
-              <img 
+              <LazyImage
                 src={captainImage} 
                 alt="Professional captain and crew of SV Iron Monkey yacht on deck" 
                 className="w-full h-auto"
-                loading="lazy"
               />
             </figure>
           </div>

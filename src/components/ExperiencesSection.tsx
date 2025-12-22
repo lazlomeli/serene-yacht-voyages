@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import sunsetCruise from "@/assets/sunset-cruise.jpg";
 import heroYacht from "@/assets/hero-yacht.jpg";
 import yachtCabin from "@/assets/yacht-deck.png";
+import LazyImage from "./LazyImage";
 
 const experiences = [
   {
@@ -58,11 +59,10 @@ const ExperiencesSection = () => {
             >
               {/* Image */}
               <figure className="aspect-[4/3] overflow-hidden">
-                <img
+                <LazyImage
                   src={experience.image}
                   alt={`${experience.title} - ${experience.description.substring(0, 50)}`}
-                  className="w-full h-full object-cover transition-transform duration-700"
-                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </figure>
 

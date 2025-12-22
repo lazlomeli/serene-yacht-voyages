@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { facilities } from "@/data/facilities";
 import { useRef, useState, useEffect } from "react";
+import LazyImage from "./LazyImage";
 
 // Import images from various folders
 import bf1 from "@/assets/breakfast/bf1.png";
@@ -154,7 +155,7 @@ const FacilitiesSection = () => {
             {/* First set of images */}
             {carouselImages.map((image, index) => (
               <div key={`img-${index}`} className="carousel-slide">
-                <img
+                <LazyImage
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover pointer-events-none"
@@ -165,7 +166,7 @@ const FacilitiesSection = () => {
             {/* Duplicate set for seamless loop */}
             {carouselImages.map((image, index) => (
               <div key={`img-duplicate-${index}`} className="carousel-slide">
-                <img
+                <LazyImage
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover pointer-events-none"

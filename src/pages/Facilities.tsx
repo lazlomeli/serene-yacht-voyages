@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { facilities, type Facility } from "@/data/facilities";
 import SEOHead from "@/components/SEO/SEOHead";
 import StructuredData from "@/components/SEO/StructuredData";
+import LazyImage from "@/components/LazyImage";
 
 const Facilities = () => {
   const navigate = useNavigate();
@@ -104,10 +105,10 @@ const Facilities = () => {
                   className="aspect-[4/3] overflow-hidden cursor-pointer"
                   onClick={() => setZoomedImage(image)}
                 >
-                  <img
+                  <LazyImage
                     src={image}
                     alt={`${currentFacility.label} view ${idx + 1}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
                 </div>
               ))}
