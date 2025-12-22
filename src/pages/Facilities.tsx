@@ -16,11 +16,6 @@ const Facilities = () => {
   const [currentFacility, setCurrentFacility] = useState(selectedFacility);
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const handleFacilitySelect = (facility: Facility) => {
     setCurrentFacility(facility);
     setSearchParams({ facility: facility.id });
@@ -33,9 +28,9 @@ const Facilities = () => {
           {/* Page Title with Back Button */}
           <div className="mb-16 flex items-center gap-4">
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate(-1)}
               className="text-muted-foreground hover:text-accent transition-colors duration-200 -ml-2"
-              aria-label="Back to home"
+              aria-label="Back to previous page"
             >
               <ChevronLeft className="w-8 h-8" />
             </button>

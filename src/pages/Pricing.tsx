@@ -55,11 +55,6 @@ const pricingPlans = [
 const Pricing = () => {
   const navigate = useNavigate();
 
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 pt-20 pb-20 bg-background">
@@ -67,9 +62,9 @@ const Pricing = () => {
           {/* Page Title with Back Button */}
           <div className="mb-16 flex items-center gap-4">
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate(-1)}
               className="text-muted-foreground hover:text-accent transition-colors duration-200 -ml-2"
-              aria-label="Back to home"
+              aria-label="Back to previous page"
             >
               <ChevronLeft className="w-8 h-8" />
             </button>
