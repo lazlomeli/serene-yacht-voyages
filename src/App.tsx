@@ -13,7 +13,16 @@ import NotFound from "./pages/NotFound";
 import LoadingOverlay from "./components/LoadingOverlay";
 import ScrollRestoration from "./components/ScrollRestoration";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+});
 
 const App = () => (
   <HelmetProvider>
