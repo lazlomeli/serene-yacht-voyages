@@ -255,7 +255,7 @@ const FacilitiesSection = () => {
         `}</style>
 
         {/* Facilities Grid */}
-        <div id="facilities-grid" className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+        <div id="facilities-grid" className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 lg:gap-12">
           {facilities.map((facility, index) => (
             <div
               key={index}
@@ -263,34 +263,34 @@ const FacilitiesSection = () => {
               onClick={() => facility.clickable && handleFacilityClick(facility.id)}
             >
               {/* Card Container with Border and Hover Effect */}
-              <div className={`p-6 border border-border rounded-sm transition-all duration-300 flex flex-col h-full ${
+              <div className={`p-4 md:p-6 border border-border rounded-sm transition-all duration-300 flex flex-col h-full ${
                 facility.clickable 
                   ? 'group-hover:border-accent group-hover:shadow-lg group-hover:shadow-accent/10 group-hover:-translate-y-1' 
                   : 'opacity-60'
               }`}>
                 {/* Icon Container */}
-                <div className={`w-16 h-16 mx-auto mb-4 border border-border flex items-center justify-center transition-all duration-300 ${
+                <div className={`w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 border border-border flex items-center justify-center transition-all duration-300 ${
                   facility.clickable ? 'group-hover:border-accent group-hover:bg-accent/5' : ''
                 }`}>
-                  <facility.icon className={`w-7 h-7 text-muted-foreground transition-colors duration-300 ${
+                  <facility.icon className={`w-6 h-6 md:w-7 md:h-7 text-muted-foreground transition-colors duration-300 ${
                     facility.clickable ? 'group-hover:text-accent' : ''
                   }`} />
                 </div>
                 
                 {/* Title and Description */}
-                <h4 className={`font-serif text-lg text-foreground mb-1 transition-colors duration-300 ${
+                <h4 className={`font-serif text-base md:text-lg text-foreground mb-1 transition-colors duration-300 ${
                   facility.clickable ? 'group-hover:text-accent' : ''
                 }`}>
                   {facility.label}
                 </h4>
-                <p className="text-muted-foreground text-sm mb-3 flex-grow">
+                <p className="text-muted-foreground text-xs md:text-sm mb-3 flex-grow">
                   {facility.description}
                 </p>
                 
-                {/* "View Details" Call-to-Action - only show for clickable */}
+                {/* "View Details" Call-to-Action - always visible on mobile, hover on desktop */}
                 {facility.clickable && (
-                  <div className="flex items-center justify-center gap-1 text-xs text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-auto">
-                    <span className="tracking-wider uppercase">View Gallery</span>
+                  <div className="flex items-center justify-center gap-1 text-xs text-accent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 mt-auto">
+                    <span className="tracking-wider uppercase">View</span>
                     <ChevronRight className="w-3 h-3" />
                   </div>
                 )}
