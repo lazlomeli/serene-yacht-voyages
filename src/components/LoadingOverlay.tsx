@@ -27,12 +27,14 @@ const LoadingOverlay = () => {
           src={ironLogo}
           alt="Iron Monkey Logo"
           className="h-24 w-24 animate-blink"
-          style={{ filter: 'invert(var(--logo-invert, 0))' }}
+          style={{ 
+            filter: 'brightness(0) saturate(100%) invert(65%) sepia(31%) saturate(692%) hue-rotate(357deg) brightness(96%) contrast(87%)'
+          }}
         />
         <div className="flex gap-1">
-          <span className="h-2 w-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></span>
-          <span className="h-2 w-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: '150ms' }}></span>
-          <span className="h-2 w-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></span>
+          <span className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: '#c6a553', animationDelay: '0ms' }}></span>
+          <span className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: '#c6a553', animationDelay: '150ms' }}></span>
+          <span className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: '#c6a553', animationDelay: '300ms' }}></span>
         </div>
       </div>
     </div>
