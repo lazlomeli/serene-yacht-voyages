@@ -34,7 +34,7 @@ const experiences = [
 
 const ExperiencesSection = () => {
   return (
-    <section id="experiences" className="section-padding bg-muted/30" aria-labelledby="experiences-heading">
+    <section id="experiences" className="bg-muted/30" style={{ padding: "80px 30px 60px 30px" }} aria-labelledby="experiences-heading">
       <div className="container-elegant">
         {/* Section Header */}
         <header className="text-center mb-16 md:mb-24">
@@ -58,7 +58,7 @@ const ExperiencesSection = () => {
               className="group bg-card border border-border overflow-hidden hover:shadow-[0_4px_30px_hsla(220,50%,12%,0.08)] transition-all duration-500"
             >
               {/* Image */}
-              <figure className="overflow-hidden max-h-[200px]">
+              <figure className="overflow-hidden max-h-[250px]">
                 <LazyImage
                   src={experience.image}
                   alt={`${experience.title} - ${experience.description.substring(0, 50)}`}

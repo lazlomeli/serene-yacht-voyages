@@ -120,7 +120,7 @@ const FacilitiesSection = () => {
   };
 
   return (
-    <section id="facilities" className="bg-background" style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+    <section id="facilities" className="bg-background" style={{ padding: "80px 30px 20px 30px" }}>
       {/* Section Header */}
       <div className="container-elegant">
         <div className="text-center mb-16 md:mb-24">
@@ -158,7 +158,7 @@ const FacilitiesSection = () => {
                 <LazyImage
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover pointer-events-none"
+                  className="carousel-image"
                   draggable="false"
                 />
               </div>
@@ -169,7 +169,7 @@ const FacilitiesSection = () => {
                 <LazyImage
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover pointer-events-none"
+                  className="carousel-image"
                   draggable="false"
                 />
               </div>
@@ -228,6 +228,28 @@ const FacilitiesSection = () => {
             margin-right: 1rem;
             border-radius: 2px;
             overflow: hidden;
+            position: relative;
+          }
+
+          .carousel-slide > div {
+            width: 400px !important;
+            height: 300px !important;
+            position: absolute;
+            inset: 0;
+          }
+
+          .carousel-image,
+          .carousel-slide img {
+            width: 400px !important;
+            height: 300px !important;
+            min-width: 400px !important;
+            min-height: 300px !important;
+            max-width: 400px !important;
+            max-height: 300px !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            pointer-events: none;
+            display: block;
           }
 
           @keyframes scroll {
@@ -247,6 +269,23 @@ const FacilitiesSection = () => {
             .carousel-slide {
               width: 240px;
               height: 200px;
+            }
+
+            .carousel-slide > div {
+              width: 240px !important;
+              height: 200px !important;
+            }
+
+            .carousel-image,
+            .carousel-slide img {
+              width: 240px !important;
+              height: 200px !important;
+              min-width: 240px !important;
+              min-height: 200px !important;
+              max-width: 240px !important;
+              max-height: 200px !important;
+              object-fit: cover !important;
+              object-position: center !important;
             }
 
             .container-elegant-facilities {
