@@ -58,7 +58,7 @@ const ExperiencesSection = () => {
               className="group bg-card border border-border overflow-hidden hover:shadow-[0_4px_30px_hsla(220,50%,12%,0.08)] transition-all duration-500"
             >
               {/* Image */}
-              <figure className="aspect-[4/3] overflow-hidden">
+              <figure className="overflow-hidden max-h-[200px]">
                 <LazyImage
                   src={experience.image}
                   alt={`${experience.title} - ${experience.description.substring(0, 50)}`}
