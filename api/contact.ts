@@ -7,18 +7,21 @@ const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-// Verify reCAPTCHA token
-const verifyRecaptcha = async (token: string): Promise<boolean> => {
+// Verify Turnstile token
+const verifyTurnstile = async (token: string): Promise<boolean> => {
   try {
-    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        secret: process.env.TURNSTILE_SECRET_KEY,
+        response: token
+      })
     });
     const data = await response.json();
     return data.success === true;
   } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
+    console.error('Turnstile verification error:', error);
     return false;
   }
 };
@@ -198,16 +201,16 @@ export default async function handler(
   }
 
   try {
-    const { name, email, experience, date, message, recaptchaToken } = req.body;
+    const { name, email, experience, date, message, turnstileToken } = req.body;
 
-    // Validate reCAPTCHA token
-    if (!recaptchaToken) {
-      return res.status(400).json({ error: 'reCAPTCHA verification is required' });
+    // Validate Turnstile token
+    if (!turnstileToken) {
+      return res.status(400).json({ error: 'Security verification is required' });
     }
 
-    const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!isRecaptchaValid) {
-      return res.status(400).json({ error: 'reCAPTCHA verification failed. Please try again.' });
+    const isTurnstileValid = await verifyTurnstile(turnstileToken);
+    if (!isTurnstileValid) {
+      return res.status(400).json({ error: 'Security verification failed. Please try again.' });
     }
 
     // Validate required fields

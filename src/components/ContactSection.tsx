@@ -1,23 +1,23 @@
 import { Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState, useRef } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 type FormState = 'idle' | 'sending' | 'success' | 'error';
 
 const ContactSection = () => {
   const [formState, setFormState] = useState<FormState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<any>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Check if reCAPTCHA is completed
-    if (!recaptchaToken) {
+    // Check if Turnstile is completed
+    if (!turnstileToken) {
       setFormState('error');
-      setErrorMessage('Please complete the reCAPTCHA verification.');
+      setErrorMessage('Please complete the security verification.');
       return;
     }
     
@@ -31,7 +31,7 @@ const ContactSection = () => {
       experience: formData.get('experience') as string,
       date: formData.get('date') as string,
       message: formData.get('message') as string,
-      recaptchaToken,
+      turnstileToken,
     };
 
     try {
@@ -47,26 +47,26 @@ const ContactSection = () => {
 
       if (response.ok) {
         setFormState('success');
-        // Reset reCAPTCHA
-        recaptchaRef.current?.reset();
-        setRecaptchaToken(null);
+        // Reset Turnstile
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
       } else {
         throw new Error(result.error || 'Failed to send inquiry');
       }
     } catch (error) {
       setFormState('error');
       setErrorMessage(error instanceof Error ? error.message : "Failed to send inquiry. Please try again or contact us directly.");
-      // Reset reCAPTCHA on error
-      recaptchaRef.current?.reset();
-      setRecaptchaToken(null);
+      // Reset Turnstile on error
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
     }
   };
 
   const resetForm = () => {
     setFormState('idle');
     setErrorMessage('');
-    setRecaptchaToken(null);
-    recaptchaRef.current?.reset();
+    setTurnstileToken(null);
+    turnstileRef.current?.reset();
   };
 
   return (
@@ -245,18 +245,18 @@ const ContactSection = () => {
                   />
                 </div>
 
-                {/* reCAPTCHA */}
+                {/* Turnstile */}
                 <div className="flex justify-center">
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''}
-                    onChange={(token) => setRecaptchaToken(token)}
-                    onExpired={() => setRecaptchaToken(null)}
-                    theme="dark"
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || ''}
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onError={() => setTurnstileToken(null)}
+                    onExpire={() => setTurnstileToken(null)}
                   />
                 </div>
 
-                <Button variant="gold" size="lg" className="w-full mt-4" type="submit" disabled={!recaptchaToken}>
+                <Button variant="gold" size="lg" className="w-full mt-4" type="submit" disabled={!turnstileToken}>
                   Send Inquiry
                 </Button>
               </form>
