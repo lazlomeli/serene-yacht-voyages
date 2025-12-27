@@ -1,7 +1,74 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+
+type FormState = 'idle' | 'sending' | 'success' | 'error';
 
 const ContactSection = () => {
+  const [formState, setFormState] = useState<FormState>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Check if reCAPTCHA is completed
+    if (!recaptchaToken) {
+      setFormState('error');
+      setErrorMessage('Please complete the reCAPTCHA verification.');
+      return;
+    }
+    
+    setFormState('sending');
+    setErrorMessage('');
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      experience: formData.get('experience') as string,
+      date: formData.get('date') as string,
+      message: formData.get('message') as string,
+      recaptchaToken,
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormState('success');
+        // Reset reCAPTCHA
+        recaptchaRef.current?.reset();
+        setRecaptchaToken(null);
+      } else {
+        throw new Error(result.error || 'Failed to send inquiry');
+      }
+    } catch (error) {
+      setFormState('error');
+      setErrorMessage(error instanceof Error ? error.message : "Failed to send inquiry. Please try again or contact us directly.");
+      // Reset reCAPTCHA on error
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
+    }
+  };
+
+  const resetForm = () => {
+    setFormState('idle');
+    setErrorMessage('');
+    setRecaptchaToken(null);
+    recaptchaRef.current?.reset();
+  };
+
   return (
     <section id="contact" className="section-padding bg-primary text-primary-foreground" aria-labelledby="contact-heading">
       <div className="container-elegant">
@@ -70,85 +137,130 @@ const ContactSection = () => {
           </div>
 
           {/* Form */}
-          <div className="bg-primary-foreground/5 border border-primary-foreground/10 p-8 md:p-10">
-            <form className="space-y-6" aria-label="Contact form">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="contact-name" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
-                    Name
-                  </label>
-                  <input
-                    id="contact-name"
-                    name="name"
-                    type="text"
-                    required
-                    className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground placeholder:text-primary-foreground/30 focus:border-accent focus:outline-none transition-colors"
-                    placeholder="Your name"
-                    aria-required="true"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="contact-email" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
-                    Email
-                  </label>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    required
-                    className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground placeholder:text-primary-foreground/30 focus:border-accent focus:outline-none transition-colors"
-                    placeholder="Your email"
-                    aria-required="true"
-                  />
-                </div>
+          <div className="bg-primary-foreground/5 border border-primary-foreground/10 p-8 md:p-10 min-h-[540px] flex flex-col">
+            {/* Sending State */}
+            {formState === 'sending' && (
+              <div className="flex flex-col items-center justify-center flex-1">
+                <Loader2 className="w-16 h-16 text-accent animate-spin mb-6" />
+                <p className="text-2xl font-serif text-primary-foreground">Sending...</p>
               </div>
+            )}
 
-              <div>
-                <label htmlFor="contact-experience" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
-                  Experience Type
-                </label>
-                <select 
-                  id="contact-experience"
-                  name="experience"
-                  className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer"
+            {/* Success State */}
+            {formState === 'success' && (
+              <div className="flex flex-col items-center justify-center flex-1 text-center">
+                <CheckCircle2 className="w-20 h-20 text-accent mb-6" />
+                <h3 className="text-3xl font-serif text-primary-foreground mb-4">Thank You!</h3>
+                <p className="text-primary-foreground/80 text-lg mb-2">Your inquiry has been sent successfully.</p>
+                <p className="text-primary-foreground/60 mb-8">We'll get back to you within 24 hours.</p>
+                <Button 
+                  variant="gold" 
+                  onClick={resetForm}
+                  className="mt-4"
                 >
-                  <option value="" className="text-foreground">Select an option</option>
-                  <option value="sunset" className="text-foreground">Sunset Cruise</option>
-                  <option value="day" className="text-foreground">Day Trip</option>
-                  <option value="multiple" className="text-foreground">Multiple days</option>
-                  <option value="custom" className="text-foreground">Custom Charter</option>
-                </select>
+                  Send Another Inquiry
+                </Button>
               </div>
+            )}
 
-              <div>
-                <label htmlFor="contact-date" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
-                  Preferred Date
-                </label>
-                <input
-                  id="contact-date"
-                  name="date"
-                  type="date"
-                  className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground focus:border-accent focus:outline-none transition-colors"
-                />
-              </div>
+            {/* Form or Error State */}
+            {(formState === 'idle' || formState === 'error') && (
+              <form className="space-y-6" aria-label="Contact form" onSubmit={handleSubmit}>
+                {formState === 'error' && (
+                  <div className="bg-red-500/10 border border-red-500/20 p-4 rounded">
+                    <p className="text-red-400 text-sm">{errorMessage}</p>
+                  </div>
+                )}
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="contact-name" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
+                      Name
+                    </label>
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      required
+                      className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground placeholder:text-primary-foreground/30 focus:border-accent focus:outline-none transition-colors"
+                      placeholder="Your name"
+                      aria-required="true"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
+                      Email
+                    </label>
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      required
+                      className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground placeholder:text-primary-foreground/30 focus:border-accent focus:outline-none transition-colors"
+                      placeholder="Your email"
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
 
-              <div>
-                <label htmlFor="contact-message" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  rows={4}
-                  className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground placeholder:text-primary-foreground/30 focus:border-accent focus:outline-none transition-colors resize-none"
-                  placeholder="Tell us about your ideal charter experience..."
-                />
-              </div>
+                <div>
+                  <label htmlFor="contact-experience" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
+                    Experience Type
+                  </label>
+                  <select 
+                    id="contact-experience"
+                    name="experience"
+                    className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer"
+                  >
+                    <option value="" className="text-foreground">Select an option</option>
+                    <option value="sunset" className="text-foreground">Sunset Cruise</option>
+                    <option value="day" className="text-foreground">Day Trip</option>
+                    <option value="multiple" className="text-foreground">Multiple days</option>
+                    <option value="custom" className="text-foreground">Custom Charter</option>
+                  </select>
+                </div>
 
-              <Button variant="gold" size="lg" className="w-full mt-4" type="submit">
-                Send Inquiry
-              </Button>
-            </form>
+                <div>
+                  <label htmlFor="contact-date" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
+                    Preferred Date
+                  </label>
+                  <input
+                    id="contact-date"
+                    name="date"
+                    type="date"
+                    className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground focus:border-accent focus:outline-none transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="contact-message" className="text-[10px] tracking-[0.2em] uppercase text-primary-foreground/60 block mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={4}
+                    className="w-full bg-transparent border-b border-primary-foreground/20 pb-2 text-primary-foreground placeholder:text-primary-foreground/30 focus:border-accent focus:outline-none transition-colors resize-none"
+                    placeholder="Tell us about your ideal charter experience..."
+                  />
+                </div>
+
+                {/* reCAPTCHA */}
+                <div className="flex justify-center">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''}
+                    onChange={(token) => setRecaptchaToken(token)}
+                    onExpired={() => setRecaptchaToken(null)}
+                    theme="dark"
+                  />
+                </div>
+
+                <Button variant="gold" size="lg" className="w-full mt-4" type="submit" disabled={!recaptchaToken}>
+                  Send Inquiry
+                </Button>
+              </form>
+            )}
           </div>
         </div>
       </div>

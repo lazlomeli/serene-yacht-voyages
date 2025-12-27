@@ -11,7 +11,7 @@ interface SEOHeadProps {
 }
 
 const SEOHead = ({
-  title = "SV Iron Monkey | Luxury Yacht Charters in Mallorca & Balearic Islands",
+  title = "SV Iron Monkey | Luxury Yacht Charters in Balearic Islands",
   description = "Experience exclusive luxury yacht charters in Mallorca, Ibiza, and Menorca. Day trips, sunset cruises, and week-long adventures aboard SV Iron Monkey. MCA certified with professional crew and premium amenities.",
   keywords = "yacht charter Mallorca, luxury yacht charter, Balearic Islands sailing, day yacht rental, sunset cruise Mallorca, yacht charter Ibiza, yacht charter Menorca, private yacht charter",
   canonicalUrl = "https://svironmonkey.nl/",

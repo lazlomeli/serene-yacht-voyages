@@ -21,7 +21,7 @@ const LoadingOverlay = () => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center" style={{ backgroundColor: 'rgba(15, 23, 42, 0.95)' }}>
       <div className="flex flex-col items-center gap-4">
         <img
           src={ironLogo}
