@@ -26,7 +26,7 @@ const verifyRecaptcha = async (token: string): Promise<boolean> => {
 // Create reusable transporter
 const createTransporter = () => {
   return nodemailer.createTransport({
-    host:'smtp.gmail.com',
+    host: process.env.SMTP_HOST,
     port: parseInt('587'),
     secure: false,
     auth: {
