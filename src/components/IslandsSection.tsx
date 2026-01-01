@@ -25,10 +25,10 @@ const islands = [
     highlights: ["Turquoise waters", "Quiet coves", "Natural reserves"],
   },
   {
-    name: "Ibiza",
-    subtitle: "Island of Contrasts",
+    name: "Ibiza & Formentera",
+    subtitle: "Islands of Contrasts",
     description:
-      "Sail to Ibiza for a blend of vibrant culture and serene beaches. From the stunning sunset views at Es Vedrà to hidden northern coves, experience both lively coastal towns and peaceful Mediterranean retreats.",
+      "Sail to Ibiza and Formentera for a blend of vibrant culture and serene beaches. From the stunning sunset views at Es Vedrà to Formentera's crystalline waters and hidden northern coves, experience both lively coastal towns and peaceful Mediterranean retreats.",
     image: ibizaImg,
     experiences: ["Multiple days"],
     highlights: ["Sunset views", "Vibrant culture", "Secluded beaches"],
