@@ -63,6 +63,7 @@ const ExperiencesSection = () => {
                   src={experience.image}
                   alt={`${experience.title} - ${experience.description.substring(0, 50)}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  aspectRatio="16/9"
                 />
               </figure>
 

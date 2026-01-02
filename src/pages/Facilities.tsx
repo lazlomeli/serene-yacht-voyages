@@ -109,6 +109,7 @@ const Facilities = () => {
                     src={image}
                     alt={`${currentFacility.label} view ${idx + 1}`}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    aspectRatio="4/3"
                   />
                 </div>
               ))}

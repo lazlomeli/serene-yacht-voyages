@@ -1,8 +1,61 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import heroVideo from "@/assets/hero-yacht-high.mp4";
+import { useEffect, useRef } from "react";
 
 const HeroSection = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force play the video on mount
+    const playVideo = async () => {
+      try {
+        // Set video properties before attempting to play
+        video.muted = true;
+        video.playsInline = true;
+        video.loop = true;
+        
+        await video.play();
+      } catch (error) {
+        console.warn("Video autoplay failed:", error);
+        // If autoplay fails, try again after a short delay
+        setTimeout(() => {
+          video.play().catch(() => {
+            // Silently fail if still can't play
+          });
+        }, 100);
+      }
+    };
+
+    // Play immediately if video is already loaded
+    if (video.readyState >= 3) {
+      playVideo();
+    } else {
+      // Otherwise wait for video to be ready
+      video.addEventListener('loadeddata', playVideo);
+      video.load(); // Explicitly trigger load
+    }
+
+    // Also try to play on user interaction (backup for restrictive browsers)
+    const handleInteraction = () => {
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+
+    document.addEventListener('touchstart', handleInteraction, { once: true });
+    document.addEventListener('click', handleInteraction, { once: true });
+
+    return () => {
+      video.removeEventListener('loadeddata', playVideo);
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('click', handleInteraction);
+    };
+  }, []);
+
   return (
     <section 
       className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden"
@@ -11,6 +64,7 @@ const HeroSection = () => {
       {/* Background Video */}
       <div className="absolute inset-0">
         <video
+          ref={videoRef}
           src={heroVideo}
           autoPlay
           loop
@@ -19,6 +73,10 @@ const HeroSection = () => {
           className="w-full h-full object-cover"
           aria-hidden="true"
           title="SV Iron Monkey sailing in the Mediterranean"
+          style={{ aspectRatio: '16/9' }}
+          preload="auto"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary/100" />
       </div>

@@ -113,13 +113,6 @@ const createConfirmationEmailHtml = (data: any) => `
           
           <p>Our team will review your request and get back to you within 24 hours to discuss availability, pricing, and any special requirements you may have.</p>
           
-          <div class="contact-info">
-            <h3>In the Meantime:</h3>
-            <p>📧 <strong>Email:</strong> <a href="mailto:info@svironmonkey.nl">info@svironmonkey.nl</a></p>
-            <p>📱 <strong>Phone:</strong> <a href="tel:+34689573660">+34 689 573 660</a></p>
-            <p>📍 <strong>Location:</strong> La Lonja Marina, Palma de Mallorca</p>
-          </div>
-          
           <p>We look forward to welcoming you aboard for an unforgettable experience on the Mediterranean waters.</p>
           
           <p>Warm regards,<br>

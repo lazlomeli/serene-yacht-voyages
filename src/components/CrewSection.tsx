@@ -49,6 +49,7 @@ const CrewSection = () => {
               src={captainImage} 
               alt="Professional captain and crew of SV Iron Monkey yacht on deck" 
               className="w-full h-auto"
+              aspectRatio="4/3"
             />
           </figure>
         </div>

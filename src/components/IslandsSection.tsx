@@ -73,6 +73,7 @@ const IslandsSection = () => {
                     src={island.image}
                     alt={`${island.name} - ${island.subtitle}: Beautiful coastline of ${island.name} in the Balearic Islands`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    aspectRatio="4/3"
                   />
                 </div>
               </figure>

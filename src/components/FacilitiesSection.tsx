@@ -160,6 +160,7 @@ const FacilitiesSection = () => {
                   alt={image.alt}
                   className="carousel-image"
                   draggable="false"
+                  aspectRatio="4/3"
                 />
               </div>
             ))}
@@ -171,6 +172,7 @@ const FacilitiesSection = () => {
                   alt={image.alt}
                   className="carousel-image"
                   draggable="false"
+                  aspectRatio="4/3"
                 />
               </div>
             ))}

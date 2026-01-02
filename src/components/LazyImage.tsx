@@ -6,6 +6,7 @@ interface LazyImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'
   className?: string;
   placeholderClassName?: string;
   onLoad?: () => void;
+  aspectRatio?: string; // e.g., "16/9", "4/3", "1/1"
 }
 
 const LazyImage = ({ 
@@ -14,6 +15,7 @@ const LazyImage = ({
   className = '', 
   placeholderClassName = '',
   onLoad,
+  aspectRatio,
   ...props 
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,7 +54,11 @@ const LazyImage = ({
   };
 
   return (
-    <div className="relative overflow-hidden" ref={containerRef}>
+    <div 
+      className="relative overflow-hidden" 
+      ref={containerRef}
+      style={aspectRatio ? { aspectRatio } : undefined}
+    >
       {/* Placeholder with animated shimmer effect */}
       {!isLoaded && (
         <div 

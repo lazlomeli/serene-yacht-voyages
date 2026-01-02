@@ -92,6 +92,7 @@ const YachtSection = () => {
                 src={yachtNight}
                 alt="SV Iron Monkey luxury sailing yacht illuminated at night in Mediterranean waters"
                 className="w-full h-full object-cover"
+                aspectRatio="16/9"
               />
             </div>
           </figure>

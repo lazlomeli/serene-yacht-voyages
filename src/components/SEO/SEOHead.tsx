@@ -28,6 +28,10 @@ const SEOHead = ({
       <meta name="keywords" content={keywords} />
       {noindex && <meta name="robots" content="noindex, nofollow" />}
       
+      {/* Preconnect for faster font loading */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
       
